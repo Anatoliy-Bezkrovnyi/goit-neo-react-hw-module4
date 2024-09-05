@@ -25,16 +25,17 @@ function App() {
   const [modalImg, setModalImg] = useState({});
   const [isModal, setIsModal] = useState(false);
   const [isLoadMore, setIsLoadMore] = useState(false);
+  
 
   async function fetchImages() {
       try {
         setLoading(true);	
         setError(false);
-        setIsLoadMore(true);
+        setIsLoadMore(false);
         const data = await fetchImagesByFilter(params);
         console.log(data);
-        setImages(data.results ?? []);
-        setIsLoadMore(response.total_pages > params.page);
+        setImages(data.total_pages ?? []);
+        setIsLoadMore(data.total_pages > params.page);
       } catch (error) {
         setError(true);
       } finally {
@@ -75,7 +76,7 @@ function App() {
     <>
       <SearchBar onSubmit={handleSubmit}/>
        <Loader visible={loading} />      
-       {error ? (
+       {!error ? (
             <ImageGallery images={images} onClick={hanleImageClick} />
           ) : (
             <ErrorMessage />
