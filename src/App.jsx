@@ -34,7 +34,7 @@ function App() {
         setIsLoadMore(false);
         const data = await fetchImagesByFilter(params);
         console.log(data);
-        setImages(data.total_pages ?? []);
+        setImages(data.results ?? []);
         setIsLoadMore(data.total_pages > params.page);
       } catch (error) {
         setError(true);
